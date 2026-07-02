@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技術支持與在線客服</title>
+    <style>
+        /* 全局與黑客矩陣背景 */
+        * {
+            box-sizing: border-box;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #050b05;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 畫布背景 */
+        #snakeCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* 賽博朋克發光卡片 */
+        .card {
+            text-align: center;
+            background: rgba(10, 25, 15, 0.8);
+            padding: 45px 35px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.2), inset 0 0 15px rgba(0, 255, 100, 0.1);
+            border: 1px solid rgba(0, 255, 100, 0.3);
+            max-width: 420px;
+            width: 85%;
+            z-index: 10;
+            position: relative;
+        }
+
+        .icon-box {
+            font-size: 42px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 255, 100, 0.8);
+            animation: pulse 2.5s infinite;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin: 0 0 12px 0;
+            color: #00ff66;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #a3b8a8;
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+        }
+
+        /* 引導框 */
+        .guide-box {
+            font-size: 13px;
+            color: #00ff66;
+            background: rgba(0, 255, 100, 0.05);
+            padding: 12px 20px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(0, 255, 100, 0.2);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 100, 0.5);
+            box-shadow: 0 0 10px rgba(0, 255, 100, 0.1);
+        }
+
+        .arrow {
+            display: inline-block;
+            animation: point 1.2s infinite;
+        }
+
+        /* 動態特效 */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        @keyframes point {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(4px, 4px); }
+            100% { transform: translate(0, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="snakeCanvas"></canvas>
+
+    <div class="card">
+        <div class="icon-box">⚡</div>
+        <h1>@ton3q-会员在线客服</h1>
+        <p>如果您在項目配置、付費、产品使用中遇到任何问题，请點右下角的对话气泡联系线上客服。</p>
+        
+        <div class="guide-box">
+            <span>右下角绿色气泡联系(需要多加载一会才出现)</span>
+            <span class="arrow">↘</span>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // 電子蛇類定義
+        class TechSnake {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.length = Math.floor(Math.random() * 15) + 15; // 蛇身節數
+                this.segments = [];
+                // 隨機初始起點
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                
+                for(let i=0; i<this.length; i++) {
+                    this.segments.push({x: x, y: y});
+                }
+                
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 2 + 1.5;
+                this.turnSpeed = Math.random() * 0.2 - 0.1;
+                this.width = Math.random() * 3 + 2; // 發光條粗細
+            }
+
+            update() {
+                // 隨機改變前進方向，形成蛇形走位
+                if (Math.random() < 0.05) {
+                    this.turnSpeed = Math.random() * 0.3 - 0.15;
+                }
+                this.angle += this.turnSpeed;
+
+                // 計算新頭部位置
+                let head = this.segments[0];
+                let newHead = {
+                    x: head.x + Math.cos(this.angle) * this.speed,
+                    y: head.y + Math.sin(this.angle) * this.speed
+                };
+
+                // 穿透邊界（循環播放）
+                if (newHead.x < -50) newHead.x = canvas.width + 50;
+                if (newHead.x > canvas.width + 50) newHead.x = -50;
+                if (newHead.y < -50) newHead.y = canvas.height + 50;
+                if (newHead.y > canvas.height + 50) newHead.y = -50;
+
+                // 身體跟隨前進
+                this.segments.unshift(newHead);
+                this.segments.pop();
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.segments[0].x, this.segments[0].y);
+                for (let i = 1; i < this.segments.length; i++) {
+                    ctx.lineTo(this.segments[i].x, this.segments[i].y);
+                }
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.lineWidth = this.width;
+
+                // 霓虹發光特效
+                ctx.strokeStyle = '#00ff66';
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#00ff66';
+                ctx.stroke();
+                
+                // 內層高亮核心線
+                ctx.lineWidth = this.width / 2;
+                ctx.strokeStyle = '#ffffff';
+                ctx.shadowBlur = 0;
+                ctx.stroke();
+            }
+        }
+
+        // 創建15條隨機活動的小蛇
+        const snakes = Array.from({length: 15}, () => new TechSnake());
+
+        // 繪製背景網格
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(0, 255, 100, 0.03)';
+            ctx.lineWidth = 1;
+            ctx.shadowBlur = 0;
+            const gridSize = 40;
+            
+            for (let x = 0; x < canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+
+        // 動態循環渲染
+        function animate() {
+            // 帶有一點點拖影效果的擦除，讓小蛇更絲滑
+            ctx.fillStyle = 'rgba(5, 11, 5, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawGrid();
+
+            snakes.forEach(snake => {
+                snake.update();
+                snake.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+
+    <script type="text/javascript">
+    var Tawk_API = Tawk_API || {};
+    Tawk_API.language = 'zh_cn'; 
+    
+    var Tawk_LoadStart = new Date();
+    (function(){
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/6a462e7bb539ed1d4853cac4/1jsh2b55m';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+    </script>
+
+</body>
+</html>
