@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技術支持與在線客服</title>
+    <title>產品價目與技術支持</title>
     <style>
-        
-        /* 全局與黑客矩陣背景 */
+        /* 全局與賽博朋克背景 */
         * {
             box-sizing: border-box;
         }
@@ -15,18 +14,17 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow-x: hidden;
             background-color: #050b05;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        
 
-        /* 畫布背景 */
+        /* Canvas 電子蛇畫布 */
         #snakeCanvas {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -34,71 +32,99 @@
             z-index: 1;
         }
 
-        /* 賽博朋克發光卡片 */
+        /* 核心炫酷卡片 */
         .card {
-            text-align: center;
-            background: rgba(10, 25, 15, 0.8);
-            padding: 45px 35px;
+            background: rgba(10, 25, 15, 0.85);
+            padding: 35px 25px;
             border-radius: 16px;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 0 30px rgba(0, 255, 100, 0.2), inset 0 0 15px rgba(0, 255, 100, 0.1);
             border: 1px solid rgba(0, 255, 100, 0.3);
-            max-width: 420px;
-            width: 85%;
+            max-width: 440px;
+            width: 90%;
             z-index: 10;
             position: relative;
-        }
-
-        .icon-box {
-            font-size: 42px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(0, 255, 100, 0.8);
-            animation: pulse 2.5s infinite;
+            text-align: center;
         }
 
         h1 {
-            font-size: 26px;
-            margin: 0 0 12px 0;
+            font-size: 24px;
+            margin: 0 0 20px 0;
             color: #00ff66;
             text-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
             font-weight: 700;
-            letter-spacing: 1px;
         }
 
-        p {
+        /* 炫酷下拉菜單樣式 */
+        .select-box {
+            width: 100%;
+            padding: 12px;
+            background: #0d2212;
+            border: 1px solid #00ff66;
+            color: #00ff66;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 100, 0.2);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .select-box option {
+            background: #0a190f;
+            color: #00ff66;
+        }
+
+        /* 產品詳情展示區域 */
+        .product-display {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px dashed rgba(0, 255, 100, 0.2);
+            margin-bottom: 25px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-desc {
             font-size: 14px;
             color: #a3b8a8;
             line-height: 1.6;
-            margin: 0 0 30px 0;
+            margin-bottom: 10px;
         }
 
-        /* 引導框 */
+        /* 耀眼的白色核心價格文字 */
+        .product-price {
+            font-size: 22px;
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+
+        /* 引導提示框 */
         .guide-box {
             font-size: 13px;
             color: #00ff66;
             background: rgba(0, 255, 100, 0.05);
-            padding: 12px 20px;
+            padding: 10px 18px;
             border-radius: 20px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             border: 1px solid rgba(0, 255, 100, 0.2);
             font-weight: bold;
-            text-shadow: 0 0 5px rgba(0, 255, 100, 0.5);
-            box-shadow: 0 0 10px rgba(0, 255, 100, 0.1);
         }
 
         .arrow {
             display: inline-block;
             animation: point 1.2s infinite;
-        }
-
-        /* 動態特效 */
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
         }
 
         @keyframes point {
@@ -109,8 +135,7 @@
     </style>
 </head>
 <body>
-
-<!--Start of Tawk.to Script-->
+	<!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -123,149 +148,122 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
-    
+
     <canvas id="snakeCanvas"></canvas>
 
     <div class="card">
-        <div class="icon-box">⚡</div>
-        <h1>@ton3q-会员在线客服</h1>
-        <p>如果您在項目配置、付費、产品使用中遇到任何问题，请點右下角的对话气泡联系线上客服。
-        </p>
-        <p>上班时间 08:00~23:59 其他时间不回复
-        </p>
+        <h1>ton3q-会员小店</h1>
+	<h3 style="color: #ffffff;">(上班时间08:00~23:59)</h3>
         
-       <div class="guide-box">
-    右下角绿色气泡联系(需要多加载一会才出现)
-    <span class="arrow">↘</span>
-       </div>
+        <select class="select-box" id="productSelect" onchange="updateProduct()">
+            <option value="tg_vip">🔥 代开TG会员---点击查看更多商品</option>
+            <option value="airplane">🔥 国外飞机号 (匿名稳定)</option>
+            <option value="fans">🔥 推特/X</option>
+            <option value="custom">🔥 tiktok/海外抖音</option>
+        </select>
+
+        <div class="product-display">
+            <div class="product-desc" id="pDesc">請選擇上方產品查看詳情...</div>
+            <div class="product-price" id="pPrice"></div>
+        </div>
+        
+	<a href="https://tawk.to/chat/6a463c280f45ca1d42939ea0/1jsh5lvro" target="_blank" style="text-decoration: none; display: inline-block;">
+        <div class="guide-box" >
+            <span>点我联系客服购买</span>
+        </div>
+	</a>
     </div>
+
+    <script>
+        // 💡 在這裡可以隨意修改你的產品介紹和白色價格
+        const data = {
+            tg_vip: {
+                desc: "3个月106元\n6个月155元\n12个月255元",
+               price: ""
+            },
+            airplane: {
+                desc: "自用号=20元\n质量号=30元\n1-3年老号+1个月会员=80元\n老号+3个月会员=150元",
+               price: ""
+            },
+            fans: {
+                desc: "随机号=15元\n满月号=25元\n半年号=40元\n10年老号=80元",
+             price: ""
+            },
+            custom: {
+                desc: "tiktok号+教程+软件=40元",
+           price: ""
+            }
+        };
+
+        function updateProduct() {
+            const select = document.getElementById('productSelect');
+            const desc = document.getElementById('pDesc');
+            const price = document.getElementById('pPrice');
+            const selectedValue = select.value;
+
+            desc.innerText = data[selectedValue].desc;
+            price.innerText = data[selectedValue].price;
+        }
+
+        // 初始化第一次顯示
+        updateProduct();
+    </script>
 
     <script>
         const canvas = document.getElementById('snakeCanvas');
         const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        // 電子蛇類定義
         class TechSnake {
-            constructor() {
-                this.init();
-            }
-
+            constructor() { this.init(); }
             init() {
-                this.length = Math.floor(Math.random() * 15) + 15; // 蛇身節數
+                this.length = Math.floor(Math.random() * 15) + 15;
                 this.segments = [];
-                // 隨機初始起點
-                let x = Math.random() * canvas.width;
-                let y = Math.random() * canvas.height;
-                
-                for(let i=0; i<this.length; i++) {
-                    this.segments.push({x: x, y: y});
-                }
-                
+                let x = Math.random() * canvas.width; let y = Math.random() * canvas.height;
+                for(let i=0; i<this.length; i++) this.segments.push({x: x, y: y});
                 this.angle = Math.random() * Math.PI * 2;
                 this.speed = Math.random() * 2 + 1.5;
                 this.turnSpeed = Math.random() * 0.2 - 0.1;
-                this.width = Math.random() * 3 + 2; // 發光條粗細
+                this.width = Math.random() * 3 + 2;
             }
-
             update() {
-                // 隨機改變前進方向，形成蛇形走位
-                if (Math.random() < 0.05) {
-                    this.turnSpeed = Math.random() * 0.3 - 0.15;
-                }
+                if (Math.random() < 0.05) this.turnSpeed = Math.random() * 0.3 - 0.15;
                 this.angle += this.turnSpeed;
-
-                // 計算新頭部位置
                 let head = this.segments[0];
-                let newHead = {
-                    x: head.x + Math.cos(this.angle) * this.speed,
-                    y: head.y + Math.sin(this.angle) * this.speed
-                };
-
-                // 穿透邊界（循環播放）
+                let newHead = { x: head.x + Math.cos(this.angle) * this.speed, y: head.y + Math.sin(this.angle) * this.speed };
                 if (newHead.x < -50) newHead.x = canvas.width + 50;
                 if (newHead.x > canvas.width + 50) newHead.x = -50;
                 if (newHead.y < -50) newHead.y = canvas.height + 50;
                 if (newHead.y > canvas.height + 50) newHead.y = -50;
-
-                // 身體跟隨前進
-                this.segments.unshift(newHead);
-                this.segments.pop();
+                this.segments.unshift(newHead); this.segments.pop();
             }
-
             draw() {
-                ctx.beginPath();
-                ctx.moveTo(this.segments[0].x, this.segments[0].y);
-                for (let i = 1; i < this.segments.length; i++) {
-                    ctx.lineTo(this.segments[i].x, this.segments[i].y);
-                }
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-                ctx.lineWidth = this.width;
-
-                // 霓虹發光特效
-                ctx.strokeStyle = '#00ff66';
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = '#00ff66';
-                ctx.stroke();
-                
-                // 內層高亮核心線
-                ctx.lineWidth = this.width / 2;
-                ctx.strokeStyle = '#ffffff';
-                ctx.shadowBlur = 0;
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(this.segments[0].x, this.segments[0].y);
+                for (let i = 1; i < this.segments.length; i++) ctx.lineTo(this.segments[i].x, this.segments[i].y);
+                ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = this.width;
+                ctx.strokeStyle = '#00ff66'; ctx.shadowBlur = 15; ctx.shadowColor = '#00ff66'; ctx.stroke();
+                ctx.lineWidth = this.width / 2; ctx.strokeStyle = '#ffffff'; ctx.shadowBlur = 0; ctx.stroke();
             }
         }
-
-        // 創建15條隨機活動的小蛇
-        const snakes = Array.from({length: 15}, () => new TechSnake());
-
-        // 繪製背景網格
-        function drawGrid() {
-            ctx.strokeStyle = 'rgba(0, 255, 100, 0.03)';
-            ctx.lineWidth = 1;
-            ctx.shadowBlur = 0;
-            const gridSize = 40;
-            
-            for (let x = 0; x < canvas.width; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, canvas.height);
-                ctx.stroke();
-            }
-            for (let y = 0; y < canvas.height; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.stroke();
-            }
-        }
-
-        // 動態循環渲染
+        const snakes = Array.from({length: 12}, () => new TechSnake());
         function animate() {
-            // 帶有一點點拖影效果的擦除，讓小蛇更絲滑
-            ctx.fillStyle = 'rgba(5, 11, 5, 0.3)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            drawGrid();
-
-            snakes.forEach(snake => {
-                snake.update();
-                snake.draw();
-            });
-
+            ctx.fillStyle = 'rgba(5, 11, 5, 0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            snakes.forEach(snake => { snake.update(); snake.draw(); });
             requestAnimationFrame(animate);
         }
         animate();
     </script>
-    
 
-
+    <script type="text/javascript">
+    var Tawk_API = Tawk_API || {}; Tawk_API.language = 'zh_cn'; 
+    (function(){
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/6a462e7bb539ed1d4853cac4/1jsh2b55m';
+        s1.charset = 'UTF-8'; s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+    </script>
 </body>
 </html>
