@@ -3,85 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ton3-会员网页在线客服</title>
+    <title>技術支持與在線客服</title>
     <style>
-        /* 全局美化：採用科技感、簡約的暗黑風格 */
+        /* 全局炫酷科技暗黑風格 */
         body {
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            color: #f8fafc;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            position: relative;
         }
 
-        .container {
+        /* 背景微弱炫酷流光裝飾 */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #38bdf8;
+            filter: blur(150px);
+            opacity: 0.15;
+            top: 10%;
+            left: 10%;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #34d399;
+            filter: blur(150px);
+            opacity: 0.12;
+            bottom: 10%;
+            right: 10%;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* 核心科技感卡片 */
+        .card {
             text-align: center;
-            background: #161b22;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            border: 1px solid #30363d;
-            max-width: 400px;
-            width: 90%;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 45px 35px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 420px;
+            width: 85%;
+            z-index: 10;
         }
 
-        .icon-chat {
-            font-size: 48px;
-            margin-bottom: 15px;
-            animation: pulse 2s infinite;
+        /* 浮動對話徽章 */
+        .avatar-area {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #38bdf8 0%, #34d399 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .avatar-area span {
+            font-size: 38px;
         }
 
         h1 {
-            font-size: 24px;
-            color: #58a6ff;
-            margin-bottom: 12px;
-            font-weight: 600;
+            font-size: 26px;
+            margin: 0 0 12px 0;
+            background: linear-gradient(to right, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         p {
             font-size: 14px;
-            color: #8b949e;
+            color: #94a3b8;
             line-height: 1.6;
-            margin: 0;
+            margin: 0 0 30px 0;
         }
 
-        .hint {
-            margin-top: 25px;
-            font-size: 13px;
-            color: #2ea44f;
-            background: rgba(46, 164, 79, 0.1);
-            padding: 8px 12px;
-            border-radius: 6px;
+        /* 直指右下角的引導框 */
+        .guide-box {
+            font-size: 14px;
+            color: #34d399;
+            background: rgba(52, 211, 153, 0.08);
+            padding: 10px 18px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            font-weight: 500;
+        }
+
+        .arrow {
             display: inline-block;
+            animation: point 1.5s infinite;
         }
 
-        /* 呼吸燈動畫，引導用戶看右下角 */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
+        /* 上下漂浮動畫 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 箭頭指向動畫 */
+        @keyframes point {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(4px, 4px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="icon-chat">💬</div>
+    <div class="card">
+        <div class="avatar-area">
+            <span>💬</span>
+        </div>
         <h1>@ton3q-会员在线客服</h1>
-        <p>如果您纸飞机无法联系我们，欢迎随时咨询。</p>
+        <p>纸飞机上的任何问题即可咨询我们</p>
         
-        <div class="hint" str="https://tawk.to/chat/6a455f7f947b871d44514a28/1jsffq32d">
-            点我开始对话
+        <div class="guide-box">
+            <span>点右下角气泡联系，若没加载出来请耐心等待</span>
+            <span class="arrow">↘</span>
         </div>
     </div>
 
     <script type="text/javascript">
-    // 🌟 在加載前強制定義 API 語言為簡體中文
+    // 🌟 1. 鎖定簡體中文語音包
     var Tawk_API = Tawk_API || {};
     Tawk_API.language = 'zh_cn'; 
     
@@ -89,7 +158,8 @@
     (function(){
         var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
         s1.async = true;
-        s1.src = 'https://embed.tawk.to/6a455f7f947b871d44514a28/1jsffq32d';
+        // 🌟 2. 這裡已經完美封裝了你最新的 1jsh2b55m 純淨版組件
+        s1.src = 'https://embed.tawk.to/6a462e7bb539ed1d4853cac4/1jsh2b55m';
         s1.charset = 'UTF-8';
         s1.setAttribute('crossorigin', '*');
         s0.parentNode.insertBefore(s1, s0);
